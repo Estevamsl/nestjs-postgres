@@ -13,8 +13,14 @@
   },
   "build": [
     {
-      "src": "./src/",
-      "locale": "en-US"
+      "src": "./src/app.service.ts",
+      "use": "@vercel/node"
     }
-  ]
+  ],
+  "route": {
+    "src":"/(.*)",
+    "path": "/",
+    "method": "GET",
+    "target": "AppService.get"
+  }
 }
