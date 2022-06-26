@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
 
 @Controller('controllers')
 export class ControllersController {
@@ -19,5 +19,10 @@ export class ControllersController {
   @HttpCode(HttpStatus.NO_CONTENT)
   create(@Body('name') body) {
     return body;
+  }
+
+  @Patch('/:id')
+  update(@Param('id') id: string, @Body('name') body: string) {
+    return `This action updates a #${id} controller`;
   }
 }
