@@ -9,7 +9,7 @@ export class ControllersController {
 
   // Get para id variado
   @Get('/:id')
-  findOne(@Param() params): string {
-    return `This action returns a #${params.id} controller`;
+  findOne(@Param('id') id:number): string {
+    return `This action returns a #${id} controller`;
   }
 }
