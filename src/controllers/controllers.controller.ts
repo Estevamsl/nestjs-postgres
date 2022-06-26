@@ -27,7 +27,7 @@ export class ControllersController {
   }
 
   @Delete('/:id')
-  remove(@Body('id') id: string) {
+  remove(@Param('id') id: string) {
     return `This action removes a #${id} controller`;
   }
 }
