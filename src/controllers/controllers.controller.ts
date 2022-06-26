@@ -1,10 +1,12 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Res } from '@nestjs/common';
 
 @Controller('controllers')
 export class ControllersController {
-  @Get('/list')
-  findAll(): string {
-    return 'This action returns all controllers';
+  @Get()
+  findAll(@Res() response): string {
+    return response.status(HttpStatus.OK).send({
+      message: 'This action returns all controllers'
+      });
   }
 
   // Get para id variado
@@ -14,7 +16,7 @@ export class ControllersController {
   }
 
   @Post()
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   create(@Body('name') body) {
     return body;
   }
