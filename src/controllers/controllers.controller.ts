@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 @Controller('controllers')
 export class ControllersController {
@@ -11,5 +11,10 @@ export class ControllersController {
   @Get('/:id')
   findOne(@Param('id') id:number): string {
     return `This action returns a #${id} controller`;
+  }
+
+  @Post()
+  create(@Body() body) {
+    return body;
   }
 }
