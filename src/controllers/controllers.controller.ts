@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Res, } from '@nestjs/common';
+import { ServicesService } from 'src/services/services.service';
 
-@Controller('controllers')
+@Controller('controllers') //endpoint para receber requisições
 export class ControllersController {
+  constructor(private readonly coursesService: ServicesService) { }
   @Get()
   findAll(@Res() response): string {
     return response.status(HttpStatus.OK).send({

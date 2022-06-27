@@ -1,22 +1,26 @@
-import { Controller, Get, Param, Delete, Body, Patch, Post } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Body, Patch, Post, HttpCode, HttpStatus, Res, Put } from '@nestjs/common';
+import { ServicesService } from '../services/services.service';
 
-@Controller('aulas')
+@Controller('aulas') //url rota para aulas (/aulas)
 export class AulasController {
-  constructor() {}
+  constructor(private readonly  coursesService: ServicesService) {} // Injectable é um decorator que permite que o serviço seja injetado em outro serviço ou classe como um provider (dependência)
 
   @Get('/')
-  findAll(): string {
-    return 'This action returns all aulas';
+  findAll(@Res() response): string { // Response é um objeto que é passado para o controller e é usado para retornar uma resposta ao usuário
+    return response.status(HttpStatus.OK).send({
+      'message': 'This action returns all aulas'
+    });
   }
 
   @Get('/:id')
-  findOne(@Param('id') id: number): string {
-    return `This action returns a #${id} aula`;
+  findOne(@Param('id') id: number) {
+    return this.coursesService.findOne(id);
+    // return `This action returns a #${id} aula`;
   }
 
   @Delete('/:id')
-  remove(@Param('id') id: number): string {
-    return `This action removes a #${id} aula`;
+  remove(@Param('id') id: number) {
+    return this.coursesService.delete(id);
   }
 
   @Patch('/:id')
@@ -25,8 +29,15 @@ export class AulasController {
   }
 
   @Post()
-  create(@Body('name') body: string): string {
-    return `This action adds a new aula with name ${body}`;
+  @HttpCode(HttpStatus.NO_CONTENT)
+  create(@Body('name') body: any) {
+    return this.coursesService.create(body);
+  }
+
+  @Put('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  updateAll(@Param('id') id: number, @Body('name') body: string): string {
+    return `This action updates a #${id} aula`;
   }
 
 }
