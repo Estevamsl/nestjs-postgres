@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Delete, Body, Patch, Post, HttpCode, HttpStatus, Res, Put } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Body, Patch, Post, HttpCode, HttpStatus, Res, Put, HttpException } from '@nestjs/common';
 import { ServicesService } from '../services/services.service';
 
 @Controller('aulas') //url rota para aulas (/aulas)
@@ -14,7 +14,11 @@ export class AulasController {
 
   @Get('/:id')
   findOne(@Param('id') id: number) {
-    return this.coursesService.findOne(id);
+    const course = this.coursesService.findOne(id);
+
+    if (!course) {
+      throw new HttpException(`#${id} Not found `, HttpStatus.NOT_FOUND);
+    }
     // return `This action returns a #${id} aula`;
   }
 
