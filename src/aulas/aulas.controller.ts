@@ -20,6 +20,7 @@ export class AulasController {
       throw new HttpException(`#${id} Not found `, HttpStatus.NOT_FOUND);
     }
     // return `This action returns a #${id} aula`;
+    return course;
   }
 
   @Delete('/:id')

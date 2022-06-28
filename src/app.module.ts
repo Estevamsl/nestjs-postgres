@@ -11,6 +11,10 @@ import { CourssesModule } from './coursses/coursses.module';
 @Module({
   imports: [CourssesModule],
   controllers: [AppController, CoursesController, ControllersController, AulasController, EscolaController],
+  // controllers: [AppController, ControllersController, AulasController, EscolaController],
+
   providers: [AppService, ServicesService],
+  // providers: [AppService],
+
 })
 export class AppModule {}
