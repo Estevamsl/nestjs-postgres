@@ -10,13 +10,14 @@ import { CourssesModule } from './coursses/coursses.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [CourssesModule, TypeOrmModule.forFeature({
+  imports: [CourssesModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
-    port: 5432,
+    port: 49153,
     username: 'postgres',
-    password: 'postgres',
+    password: 'postgrespw',
     database: 'postgres',
+    autoLoadEntities: true,
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
   })],
