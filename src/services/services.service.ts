@@ -1,4 +1,4 @@
-import { Injectable, HttpCode, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpCode, HttpStatus, HttpException } from '@nestjs/common';
 import { Course } from 'src/controllers/entities/course.entity';
 
 // Os Services são responsáveis pelas regras de negócio da nossa aplicação
@@ -30,14 +30,19 @@ export class ServicesService { // Injetar o Service no Controller para usar os m
   // São responsáveis pela regra de negócio do curso (cursosService.create)
   // Aqui é o local onde você define as regras de negócio do curso (cursosService.create) e não no controller
   findAll(): Course[] {
-    return this.courses;
+    const course = this.courses;
+    if(!course) {
+      throw new HttpException('Course not found', HttpStatus.NOT_FOUND);
+    }
+    return course;
   }
 
   findOne(id: number): Course {
-    if (id > this.courses.length) {
-      throw new Error('Course not found');
+    const course = this.courses.find(course => course.id === Number(id));
+    if (!course) {
+      throw new HttpException('Course not found', HttpStatus.NOT_FOUND);
     }
-    return this.courses.find(course => course.id === Number(id));
+    return course;
   }
 
   create(createCourseDto: any) {
