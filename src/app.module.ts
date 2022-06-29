@@ -5,9 +5,10 @@ import { CoursesController } from './courses/courses.controller';
 import { ControllersController } from './controllers/controllers.controller';
 import { ServicesService } from './services/services.service';
 import { AulasController } from './aulas/aulas.controller';
-import { EscolaController } from './module/escola/escola.controller';
+// import { EscolaController } from './module/escola/escola.controller';
 import { CourssesModule } from './coursses/coursses.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Course } from './entities/course.entity';
 
 @Module({
   imports: [CourssesModule, TypeOrmModule.forRoot({
@@ -20,8 +21,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     autoLoadEntities: true,
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
-  })],
-  controllers: [AppController, CoursesController, ControllersController, AulasController, EscolaController],
+  }), TypeOrmModule.forFeature([Course])],
+  controllers: [AppController, CoursesController, ControllersController, AulasController],
   // controllers: [AppController, ControllersController, AulasController, EscolaController],
 
   providers: [AppService, ServicesService],
