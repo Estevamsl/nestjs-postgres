@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Res, } from '@nestjs/common';
 import { ServicesService } from 'src/services/services.service';
+import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Controller('controllers') //endpoint para receber requisições para que esse controller seja chamado para executar a ação desejada
 export class ControllersController {
@@ -29,12 +31,12 @@ export class ControllersController {
 
   @Post('/')
   @HttpCode(HttpStatus.NO_CONTENT)
-  create(@Body() body) {
-    return this.coursesService.create(body);
+  create(@Body() createCourseDto: CreateCourseDto) {
+    return this.coursesService.create(createCourseDto);
   }
 
   @Patch('/:id')
-  update(@Param('id') id: string, @Body('name') body: string) { // @Param serve para receber o id da rota e @Body para receber o body da requisição e retornar o id
+  update(@Param('id') id: string, @Body('name') ppdateCourseDto: UpdateCourseDto) { // @Param serve para receber o id da rota e @Body para receber o body da requisição e retornar o id
     return `This action updates a #${id} controller`; // Body corpo da requisição o usuário deseja atualizar algo no backend
   }
 
