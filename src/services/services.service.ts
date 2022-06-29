@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpCode, HttpStatus } from '@nestjs/common';
 import { Course } from 'src/controllers/entities/course.entity';
 
-@Injectable() // Injectable é um decorator que permite que o serviço seja injetado em outro serviço ou classe como um provider (dependência)
-export class ServicesService {
+// Os Services são responsáveis pelas regras de negócio da nossa aplicação
+@Injectable() // Injectable é um decorator que permite que o serviço seja injetado em outro serviço ou classe como um provider (dependência) geralmente usado para injetar dependências nos controllers
+export class ServicesService { // Injetar o Service no Controller para usar os métodos
   private courses: Course[] = [
     {
       id: 1,
@@ -23,6 +24,7 @@ export class ServicesService {
       updatedAt: new Date(),
     }
   ];
+  
   // array de cursos que será usado para armazenar os cursos que serão criados e retornados ao usuário (cursosService.create)
   // Esse métodos irão manipular o array de cursos e retornar o curso que foi criado, consultado, consultado em parte, atualizado ou deletado (cursosService.create)
   // São responsáveis pela regra de negócio do curso (cursosService.create)
@@ -32,6 +34,9 @@ export class ServicesService {
   }
 
   findOne(id: number): Course {
+    if (id > this.courses.length) {
+      throw new Error('Course not found');
+    }
     return this.courses.find(course => course.id === Number(id));
   }
 
@@ -54,9 +59,11 @@ export class ServicesService {
     return courseToUpdate;
   }
 
-  delete(id: number): Course {
+  delete(id: any): Course {
     const courseToDelete = this.findOne(id);
     this.courses = this.courses.filter(course => course.id !== id);
     return courseToDelete;
   }
 }
+
+// Usar todos esses métodos no Controller
